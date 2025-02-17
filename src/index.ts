@@ -1,7 +1,10 @@
-import "dotenv/config";
+import app from "./app";
+// TODO: logger
+// TODO: env file
+const port = 3000;
 
-export function main() {
-  console.log("Running");
-}
+const server = app.listen(port, () => {
+  console.info(`Server running on port ${port}`);
+});
 
-main();
+export default server;

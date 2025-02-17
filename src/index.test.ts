@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, beforeAll, afterAll } from "vitest";
-import { main } from ".";
 
 describe("main", () => {
   beforeAll(() => {
@@ -13,7 +12,6 @@ describe("main", () => {
   });
 
   it("should handle SIGINT signal", () => {
-    main();
     expect(true).toBeTruthy();
   });
 });
