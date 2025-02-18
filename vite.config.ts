@@ -4,7 +4,7 @@ export default defineConfig({
   plugins: [],
   test: {
     globals: true,
-    include: ["src/**/*.test.ts"],
+    include: ["**/*.test.ts"],
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],
