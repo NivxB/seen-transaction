@@ -1,7 +1,10 @@
 import { decodeArrayOfType } from "../utils";
 import { SEENTransaction } from "../models";
 
-const URL = "https://cdn.seen.com/challenge/transactions-v2.1.json";
+const URL = process.env.SEEN_TRANSACTION_DATA_URL;
+if (!URL) {
+  throw Error("Missing SEEN_TRANSACTION_DATA_URL");
+}
 
 let transactions: SEENTransaction[] | null = null;
 
