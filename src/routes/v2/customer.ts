@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCustomerTransactions, getRelatedCustomers } from "../../service";
+import { getCustomerTransactions, getRelatedCustomers } from "../../services";
 import { isSEENCustomer } from "../../clients/seen";
 const router = Router();
 

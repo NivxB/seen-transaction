@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, Mock, beforeEach, afterEach } from "vitest";
-import { getCustomerTransactions, getRelatedCustomers } from "../../../src/service/customer";
+import { getCustomerTransactions, getRelatedCustomers } from "../../../src/services/customer";
 import { getSEENTransactions } from "../../../src/clients/seen";
 import { MOCK_TRANSACTION_DATA } from "../../constants";
 
