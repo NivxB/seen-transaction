@@ -1,6 +1,12 @@
 import { getSEENTransactions } from "../clients/seen";
 import type { RelatedCustomer, Transaction } from "../models";
 
+/**
+ * Fetches transactions for a given customer and organizes them based on related transactions.
+ *
+ * @param {number} customerId - The ID of the customer.
+ * @returns {Promise<Transaction[]>} - A promise resolving to an array of transactions.
+ */
 export const getCustomerTransactions = async (customerId: number): Promise<Transaction[]> => {
   const transactions = await getSEENTransactions();
 
@@ -8,10 +14,16 @@ export const getCustomerTransactions = async (customerId: number): Promise<Trans
     .filter((transaction) => transaction.customerId === customerId)
     .sort((a, b) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime());
 
-  // Root Transaction Id , Transaction
+  /**
+   * Root Transaction Id -> Transaction
+   * @type {Map<number, Transaction>}
+   */
   const relatedTransactions: Map<number, Transaction> = new Map();
 
-  // Related Transaction, Root Transaction
+  /**
+   * Related Transaction Id -> Root Transaction Id
+   * @type {Map<number, number>}
+   */
   const relatedMapIds: Map<number, number> = new Map();
 
   for (const transaction of customerTransactions) {
@@ -61,6 +73,12 @@ export const getCustomerTransactions = async (customerId: number): Promise<Trans
   return Array.from(relatedTransactions.values()).reverse();
 };
 
+/**
+ * Retrieves related customers based on transaction relationships.
+ *
+ * @param {number} customerId - The ID of the customer.
+ * @returns {Promise<RelatedCustomer[]>} - A promise resolving to an array of related customers.
+ */
 export const getRelatedCustomers = async (customerId: number): Promise<RelatedCustomer[]> => {
   const transactions = await getSEENTransactions();
 

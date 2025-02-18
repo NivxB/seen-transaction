@@ -19,7 +19,6 @@ router.get("/:customerId/transactions", async (req, res) => {
   res.json(customerTransactions);
 });
 
-// api name ?
 router.get("/:customerId/related", async (req, res) => {
   const customerId = req.params.customerId;
   const relatedCustomers = await getRelatedCustomers(parseInt(customerId));
