@@ -1,7 +1,17 @@
 import { Router } from "express";
 import customerRouter from "./customer";
 
+const routes = [
+  {
+    path: "/customer",
+    route: customerRouter
+  }
+];
+
 const router = Router();
-router.use("/v2/customer", customerRouter);
+
+routes.forEach((route) => {
+  router.use(route.path, route.route);
+});
 
 export default router;

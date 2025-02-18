@@ -14,6 +14,8 @@ export const TransactionTimelineItem = D.struct({
   amount: D.number
 });
 
+export type TransactionTimelineItem = D.TypeOf<typeof TransactionTimelineItem>;
+
 export const Transaction = D.struct({
   createdAt: D.string,
   updatedAt: D.string,
