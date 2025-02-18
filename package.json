@@ -8,16 +8,16 @@
     "start": "tsx watch src/index.ts",
     "lint": "prettier --check . && eslint .",
     "lint:fix": "prettier --write . && eslint . --fix",
-    "test": "vitest test --silent",
-    "test:unit": "vitest test/unit --silent",
-    "test:integration": "vitest test/integration --silent",
+    "test": "dotenvx run -- vitest test --silent",
+    "test:unit": "dotenvx run -- vitest test/unit --silent",
+    "test:integration": "dotenvx run -- vitest test/integration --silent",
     "clean": "rimraf build",
     "build": "rimraf build && tsc",
     "start:prod": "node build/index.js"
   },
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "@dotenvx/dotenvx": "^1.36.0",
     "express": "^4.21.2",
     "fp-ts": "^2.16.9",
     "io-ts": "^2.2.22"

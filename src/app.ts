@@ -1,4 +1,3 @@
-import "dotenv/config";
 import express from "express";
 import { v2 } from "./routes";
 
@@ -16,5 +15,8 @@ app.get("/health", (_req, res) => {
   });
 });
 app.use("/v2", v2);
+app.use((_req, res) => {
+  res.status(404).json({ code: "not_found" });
+});
 
 export default app;

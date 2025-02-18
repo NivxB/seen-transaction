@@ -1,3 +1,5 @@
+import "@dotenvx/dotenvx/config";
+
 import app from "./app";
 // TODO: logger
 const port = process.env.PORT;
