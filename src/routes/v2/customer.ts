@@ -9,7 +9,7 @@ router.use("/:customerId", async (req, res, next) => {
   if (isValidCustomer) {
     next();
   } else {
-    res.status(404).json({ error: true, code: "not_found" });
+    res.status(404).json({ code: "not_found" });
   }
 });
 
