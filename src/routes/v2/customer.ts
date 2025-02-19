@@ -7,8 +7,10 @@ router.use("/:customerId", isValidSEENCustomer);
 
 router.get("/:customerId/transactions", async (req, res) => {
   const customerId = req.params.customerId;
-  const customerTransactions = await getCustomerTransactions(parseInt(customerId));
-  res.json(customerTransactions);
+  const transactions = await getCustomerTransactions(parseInt(customerId));
+  res.json({
+    transactions
+  });
 });
 
 export default router;

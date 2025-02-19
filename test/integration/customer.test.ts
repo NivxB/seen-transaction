@@ -19,20 +19,23 @@ describe("Customer Routes", () => {
     // Act
     const response = await request(app).get("/v2/customer/123/transactions").expect(404);
     // Assert
-    expect(response.body).toStrictEqual({ error: true, code: "not_found" });
+    expect(response.body).toStrictEqual({ code: "not_found" });
   });
 
   it("should return customer transactions", async () => {
     // Act
     const response = await request(app).get("/v2/customer/1/transactions").expect(200);
     // Arrange
-    expect(response.body).toHaveLength(4);
+    expect(response.body.transactions).toBeDefined();
+    expect(response.body.transactions).toHaveLength(4);
   });
 
   it("should return related customers", async () => {
     // Act
-    const response = await request(app).get("/v2/customer/1/related").expect(200);
+    const response = await request(app).get("/v2/admin/customer/1/related").expect(200);
     // Arrange
-    expect(response.body).toEqual([]);
+    expect(response.body).toEqual({
+      relatedCustomers: []
+    });
   });
 });

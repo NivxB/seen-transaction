@@ -13,55 +13,60 @@ Retrieves a list of transactions associated with a specific customer.
 #### Response
 
 ```ts
-[{
-   createdAt: string;
-   updatedAt: string;
-   transactionId: number;
-   authorizationCode: string;
-   status: "PENDING" | "SETTLED" | "RETURNED";
-   description: string;
-   transactionType:
-      "ACH_INCOMING" |
-      "ACH_OUTGOING" |
-      "FEE" |
-      "P2P_RECEIVE" |
-      "P2P_SEND" |
-      "POS" |
-      "WIRE_INCOMING" |
-      "WIRE_OUTGOING";
-   metadata?: {
-      relatedTransactionId?: number;
-      deviceId?: string;
-   };
-   timeline: {
+{
+   transactions: [{
       createdAt: string;
-      status: string;
-      amount: number;
-   }
-}]
+      updatedAt: string;
+      transactionId: number;
+      authorizationCode: string;
+      status: "PENDING" | "SETTLED" | "RETURNED";
+      description: string;
+      transactionType:
+         "ACH_INCOMING" |
+         "ACH_OUTGOING" |
+         "FEE" |
+         "P2P_RECEIVE" |
+         "P2P_SEND" |
+         "POS" |
+         "WIRE_INCOMING" |
+         "WIRE_OUTGOING";
+      metadata?: {
+         relatedTransactionId?: number;
+         deviceId?: string;
+      };
+      timeline: {
+         createdAt: string;
+         status: string;
+         amount: number;
+      }
+   }]
+}
 ```
 
 ### Fetch Related Customers
 
-**GET** `/v2/customer/:customerId/related`
+**GET** `/v2/admin/customer/:customerId/related`
 
 Retrieves a list of related customers based on transactions.
 
 #### Response
 
 ```ts
-[{
-   relatedCustomerId: number;
-   relationType:
-      "ACH_INCOMING" |
-      "ACH_OUTGOING" |
-      "FEE" |
-      "P2P_RECEIVE" |
-      "P2P_SEND" |
-      "POS" |
-      "WIRE_INCOMING" |
-      "WIRE_OUTGOING";
-}]
+{
+   relatedCustomers: [{
+      relatedCustomerId: number;
+      relationType:
+         "ACH_INCOMING" |
+         "ACH_OUTGOING" |
+         "FEE" |
+         "P2P_RECEIVE" |
+         "P2P_SEND" |
+         "POS" |
+         "WIRE_INCOMING" |
+         "WIRE_OUTGOING";
+   }]
+}
+
 ```
 
 ## Requirements
