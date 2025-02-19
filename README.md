@@ -87,7 +87,7 @@ cp .env.example .env
 ## Running the Application
 
 ```sh
-npm start  # Runs the application 
+npm start  # Runs the application
 ```
 
 ## Testing

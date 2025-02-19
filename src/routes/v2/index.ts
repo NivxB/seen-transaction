@@ -1,10 +1,15 @@
 import { Router } from "express";
 import customerRouter from "./customer";
+import { adminCustomerRouter } from "./admin";
 
 const routes = [
   {
     path: "/customer",
     route: customerRouter
+  },
+  {
+    path: "/admin/customer",
+    route: adminCustomerRouter
   }
 ];
 
