@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "build/index.js",
+  "type": "module",
   "scripts": {
     "start": "tsx watch src/index.ts",
     "lint": "prettier --check . && eslint .",
@@ -11,8 +12,7 @@
     "test:unit": "dotenvx run -- vitest test/unit --silent",
     "test:integration": "dotenvx run -- vitest test/integration --silent",
     "clean": "rimraf build",
-    "build": "rimraf build && tsc",
-    "start:prod": "node build/index.js"
+    "build": "rimraf build && tsc"
   },
   "license": "MIT",
   "dependencies": {

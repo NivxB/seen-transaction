@@ -1,4 +1,68 @@
-# Seen Transaction
+# Seen Transaction API
+
+API to fetch customer transactions and related customers based on their transactions.
+
+## API Endpoints
+
+### Fetch Customer Transactions
+
+**GET** `/v2/customer/:customerId/transactions`
+
+Retrieves a list of transactions associated with a specific customer.
+
+#### Response
+
+```ts
+[{
+   createdAt: string;
+   updatedAt: string;
+   transactionId: number;
+   authorizationCode: string;
+   status: "PENDING" | "SETTLED" | "RETURNED";
+   description: string;
+   transactionType:
+      "ACH_INCOMING" |
+      "ACH_OUTGOING" |
+      "FEE" |
+      "P2P_RECEIVE" |
+      "P2P_SEND" |
+      "POS" |
+      "WIRE_INCOMING" |
+      "WIRE_OUTGOING";
+   metadata?: {
+      relatedTransactionId?: number;
+      deviceId?: string;
+   };
+   timeline: {
+      createdAt: string;
+      status: string;
+      amount: number;
+   }
+}]
+```
+
+### Fetch Related Customers
+
+**GET** `/v2/customer/:customerId/related`
+
+Retrieves a list of related customers based on transactions.
+
+#### Response
+
+```ts
+[{
+   relatedCustomerId: number;
+   relationType:
+      "ACH_INCOMING" |
+      "ACH_OUTGOING" |
+      "FEE" |
+      "P2P_RECEIVE" |
+      "P2P_SEND" |
+      "POS" |
+      "WIRE_INCOMING" |
+      "WIRE_OUTGOING";
+}]
+```
 
 ## Requirements
 
@@ -6,20 +70,30 @@
 
 ## Installation
 
-1. Clone the repo.
-2. Run `npm install`.
-3. Copy `.env.example` to `.env`:
+```sh
+# Clone the repository
+git clone https://github.com/NivxB/seen-transaction.git
 
-   ```sh
-   cp .env.example .env
-   ```
+# Navigate to the project directory
+cd seen-transaction
 
-## Running
+# Install dependencies
+npm install
 
-- `npm start`: Run in development mode.
+# Copy environment configuration
+cp .env.example .env
+```
 
-## Test
+## Running the Application
 
-- `npm run test`: Run all tests.
-- `npm run test:unit`: Run unit tests.
-- `npm run test:integration`: Run integration tests.
+```sh
+npm start  # Runs the application 
+```
+
+## Testing
+
+```sh
+npm run test           # Run all tests
+npm run test:unit      # Run unit tests
+npm run test:integration  # Run integration tests
+```
