@@ -1,5 +1,6 @@
 import { getSEENTransactions } from "../clients/seen";
-import type { RelatedCustomer, Transaction } from "../models";
+import { SEENTransactionType, type RelatedCustomer, type Transaction } from "../models";
+import { decodeType } from "../utils";
 
 /**
  * Fetches transactions for a given customer and organizes them based on related transactions.
@@ -82,27 +83,32 @@ export const getCustomerTransactions = async (customerId: number): Promise<Trans
 export const getRelatedCustomers = async (customerId: number): Promise<RelatedCustomer[]> => {
   const transactions = await getSEENTransactions();
 
-  const { customerTransactions, relatedTransactions } = transactions.reduce(
-    (acc, transaction) => {
-      if (transaction.customerId === customerId) {
-        acc.customerTransactions.add(transaction.transactionId);
-        if (transaction.metadata?.relatedTransactionId) {
-          acc.relatedTransactions.add(transaction.metadata.relatedTransactionId);
-        }
-      }
-      return acc;
-    },
-    { customerTransactions: new Set<number>(), relatedTransactions: new Set<number>() }
+  const customerTransactions = transactions.filter(({ customerId: id }) => id === customerId);
+  const relatedTransactionIds = new Set(
+    customerTransactions.map(({ metadata }) => metadata.relatedTransactionId).filter(Boolean)
   );
-
-  return transactions
+  const deviceIds = new Set(
+    transactions
+      .filter(
+        ({ customerId: custId, transactionId, metadata }) =>
+          (custId === customerId || relatedTransactionIds.has(transactionId)) && metadata.deviceId
+      )
+      .map(({ metadata }) => metadata.deviceId)
+  );
+  const relatedTransactions = transactions
     .filter(
-      (transaction) =>
-        relatedTransactions.has(transaction.transactionId) &&
-        !customerTransactions.has(transaction.transactionId)
+      ({ customerId: custId, transactionId }) =>
+        custId !== customerId && relatedTransactionIds.has(transactionId)
     )
-    .map((transaction) => ({
-      relatedCustomerId: transaction.customerId,
-      relationType: transaction.transactionType
+    .map(({ customerId: relatedCustomerId, transactionType: relationType }) => ({
+      relatedCustomerId,
+      relationType
     }));
+  const deviceTransactions = transactions
+    .filter(({ customerId: id, metadata }) => id !== customerId && deviceIds.has(metadata.deviceId))
+    .map(({ customerId: relatedCustomerId }) => ({
+      relatedCustomerId,
+      relationType: decodeType(SEENTransactionType, "DEVICE") // TODO: enum
+    }));
+  return [...relatedTransactions, ...deviceTransactions];
 };

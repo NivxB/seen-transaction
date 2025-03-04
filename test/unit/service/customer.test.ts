@@ -150,14 +150,14 @@ describe("getRelatedCustomers", () => {
     // Act
     const relatedCustomers = await getRelatedCustomers(5);
     // Assert
-    expect(relatedCustomers).toHaveLength(2);
+    expect(relatedCustomers).toHaveLength(6);
     expect(relatedCustomers[0].relatedCustomerId).toBe(4);
     expect(relatedCustomers[0].relationType).toBe("P2P_SEND");
 
     // Related customer should have the opposite transaction
     const relatedRelatedCustomers = await getRelatedCustomers(4);
     // Assert
-    expect(relatedRelatedCustomers).toHaveLength(2);
+    expect(relatedRelatedCustomers).toHaveLength(6);
     expect(relatedRelatedCustomers[1].relatedCustomerId).toBe(5);
     expect(relatedRelatedCustomers[1].relationType).toBe("P2P_RECEIVE");
   });

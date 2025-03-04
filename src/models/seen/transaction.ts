@@ -8,7 +8,8 @@ export const SEENTransactionType = D.literal(
   "P2P_SEND",
   "POS",
   "WIRE_INCOMING",
-  "WIRE_OUTGOING"
+  "WIRE_OUTGOING",
+  "DEVICE"
 );
 
 export type SEENTransactionType = D.TypeOf<typeof SEENTransactionType>;
